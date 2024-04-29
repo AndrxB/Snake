@@ -5,4 +5,6 @@ module com.example.snake {
 
     opens com.example.snake to javafx.fxml;
     exports com.example.snake;
+    exports com.example.snake.entities;
+    opens com.example.snake.entities to javafx.fxml;
 }
