@@ -1,14 +1,9 @@
 package com.example.snake;
 
-import com.example.snake.entities.Entity;
+import com.example.snake.entities.Snake;
 
 public class Model {
-    public static World world = new World(10);
-    private static final Entity player = new Snake();
-
-    static {
-        world.addEntity(player);
-    }
-
+    public static World world = new World(new Snake());
+    public static boolean isActive = true;
 
 }

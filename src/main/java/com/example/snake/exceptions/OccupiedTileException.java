@@ -1,12 +1,12 @@
 package com.example.snake.exceptions;
 
-import com.example.snake.entities.Entity;
+import com.example.snake.entities.IEntity;
 
 public class OccupiedTileException extends RuntimeException{
-    Entity entity;
+    IEntity entity;
     Integer[] coordinate;
-    public OccupiedTileException(Entity entity, int x, int y){
-        super("Trying to access tile");
+    public OccupiedTileException(IEntity entity, int x, int y){
+        super("Trying to access occupied tile");
         this.entity = entity;
         this.coordinate = new Integer[]{x,y};
     }
@@ -15,7 +15,7 @@ public class OccupiedTileException extends RuntimeException{
         return this.coordinate;
     }
 
-    public Entity getEntity(){
+    public IEntity getEntity(){
         return this.entity;
     }
 

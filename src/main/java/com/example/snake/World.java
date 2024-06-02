@@ -1,40 +1,40 @@
 package com.example.snake;
 
-import com.example.snake.entities.Entity;
-import utility.HelperMethod;
+import com.example.snake.entities.IEntity;
+import com.example.snake.entities.Snake;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class World {
-    private final int size;
-    private final Entity[][] tiles;
-    private final List<Entity> entityList;
-    public World(int size){
-        this.size = size;
+    public final List<IEntity> entityList;
+    public World(IEntity player){
         this.entityList = new ArrayList<>();
-        this.tiles = new Entity[size][size];
+        addEntity(player);
     }
 
-    public void addEntity(Entity entity){
-        entityList.add(entity);
-        Integer[] coordinate = HelperMethod.getRandomCoord();
-        tiles[coordinate[0]][coordinate[1]] = entity;
+    public void addEntity(IEntity entity){
+        if(entityList.isEmpty()){
+            entityList.add(entity);
+            entity.setLocation(1000/2, 600/2);
+        }
     }
 
-    public void removeEntity(Entity entity){
+    public void removeEntity(IEntity entity){
         entityList.remove(entity);
     }
 
-    public List<? extends Entity> getEntities(Class<? extends Entity> clazz){
-        List<Entity> newList = new ArrayList<>(entityList.size());
-        for (Entity entity : entityList)
+    public List<? extends IEntity> getEntities(Class<? extends IEntity> clazz){
+        List<IEntity> newList = new ArrayList<>(entityList.size());
+        for (IEntity entity : entityList)
             if(entity.getClass() == clazz)
                 newList.add(entity);
         return newList;
     }
 
-    public List<Entity> getAllEntities(){
+    public List<IEntity> getAllEntities(){
         return this.entityList;
     }
 
@@ -42,11 +42,15 @@ public class World {
         return (Snake) entityList.get(0);
     }
 
-    public boolean isOccupied(int x, int y){
-        return tiles[x][y] != null;
+    public void run(GraphicsContext gc){
+        entityList.forEach(entity->{
+            entity.draw(gc);
+        });
     }
 
-    public int getSize(){
-        return size;
+    public void run(GraphicsContext gc, KeyCode state){
+        entityList.forEach(entity->{
+            entity.draw(gc, state);
+        });
     }
 }
